@@ -38,50 +38,37 @@ $$
 \sin(\theta_i)
 $$
 
-The system is therefore suitable for studying both local linear stability and nonlinear stability characteristics.
+The resulting model is represented as an **8-state nonlinear dynamical system**, consisting of four angular positions and four angular velocities.
 
-## Stability Analysis
+## Mathematical Formulations
 
-Two main stability approaches are investigated.
+The equations of motion are investigated using several formulations:
 
-### 1. Small-Deviation Stability
+### Newton's Method
 
-The nonlinear equations are linearized around equilibrium configurations.
+The equations of motion are derived from force and moment balances applied to the mechanical elements.
 
-The resulting state-space model has the form:
+### Lagrange's Equations
 
-$$
-\dot{x}=Ax+Bu
-$$
-
-The eigenvalues of the system matrix are then calculated to determine the local stability characteristics of the equilibrium point.
-
-The analysis considers equilibrium configurations around:
-
-* \(\theta_i = 0\)
-* \(\theta_i = \pi\)
-
-For the selected parameters, the equilibrium around \(\theta_i=0\) is reported as locally asymptotically stable, while the configuration around \(\theta_i=\pi\) exhibits unstable small-deviation behavior.
-
-## 2. Large-Deviation Stability
-
-The nonlinear system is further investigated using a Lyapunov-based approach.
-
-A quadratic Lyapunov function is constructed in the form:
+The system is formulated using the Lagrangian:
 
 $$
-V(x)=x^TPx
+L=T-V
 $$
 
-where \(P\) is a positive-definite matrix.
+and the corresponding Lagrange equations.
 
-The time derivative of the Lyapunov function is investigated to determine the stability properties of the nonlinear system.
+### Direct Hamilton Principle
 
-The project also examines the **region of attraction** associated with the selected Lyapunov function.
+The equations of motion are also developed using the variational formulation based on Hamilton's principle.
 
-## Numerical Simulation
+### Canonical Hamiltonian Formulation
 
-The dynamic response of the system is obtained numerically for a representative set of parameters and initial conditions.
+The system is represented using canonical coordinates and momenta to obtain the corresponding Hamiltonian equations.
+
+## Dynamic Response
+
+The nonlinear equations are numerically integrated to investigate the dynamic response of the system for selected initial conditions and parameters.
 
 The simulations include the time histories of:
 
@@ -94,48 +81,169 @@ The simulations include the time histories of:
 * Angular displacement \(\theta_4\)
 * Angular velocity \(\dot{\theta}_4\)
 
-The project also includes three-dimensional visualizations related to the Lyapunov analysis and region of attraction.
+The main nonlinear equations of motion used in the numerical simulations are implemented in `eom18.m`.
+
+## Stability Analysis
+
+The project investigates stability from two complementary perspectives.
+
+### Small-Deviation Stability
+
+The nonlinear equations are linearized around equilibrium configurations.
+
+The resulting state-space model has the form:
+
+$$
+\dot{x}=Ax+Bu
+$$
+
+The eigenvalues of the system matrix are calculated to characterize the local stability of the equilibrium configurations.
+
+The analysis considers equilibrium configurations around:
+
+* \(\theta_i=0\)
+* \(\theta_i=\pi\)
+
+For the selected parameters, the equilibrium around \(\theta_i=0\) is reported as locally asymptotically stable, while the configuration around \(\theta_i=\pi\) exhibits unstable small-deviation behavior.
+
+### Large-Deviation Stability
+
+The nonlinear system is further investigated using a Lyapunov-based approach.
+
+A quadratic Lyapunov function is constructed in the form:
+
+$$
+V(x)=x^TPx
+$$
+
+where \(P\) is a positive-definite matrix.
+
+The time derivative of the Lyapunov function is analyzed to investigate nonlinear stability and the corresponding region of attraction.
 
 ## Lyapunov Exponents
 
-The convergence of the calculated Lyapunov exponent is investigated numerically.
+The convergence of the Lyapunov exponent is investigated numerically.
 
-The corresponding MATLAB implementation uses the system Jacobian and a quadratic Lyapunov formulation to investigate the stability characteristics of the nonlinear system.
+The repository includes the **LET (Lyapunov Exponents Toolbox)** implementation used in the project. The analysis is based on the system Jacobian and Lyapunov-related matrix formulations to investigate the stability characteristics of the nonlinear system.
 
-## Project Structure
+## Repository Structure
 
 ```text
-four-dof-spring-coupled-system-stability/
+Four-DoF-Spring-Coupled-System-Stability/
 │
-├── README.md
+├── LET/
+│   └── Lyapunov Exponents Toolbox
 │
-├── MATLAB/
-│   ├── equations_of_motion/
-│   ├── simulation/
-│   ├── linear_stability/
-│   ├── lyapunov_analysis/
-│   └── region_of_attraction/
+├── canonical hamilton/
+│   └── Canonical Hamiltonian formulation
 │
-├── figures/
-│   ├── dynamic_response/
-│   ├── eigenvalue_analysis/
-│   └── lyapunov_analysis/
+├── lagrange(initial1)/
+│   └── Lagrangian formulation – initial condition set 1
 │
-├── report/
-│   └── Advanced_Dynamics_Project.pdf
+├── lagrange(initial2)/
+│   └── Lagrangian formulation – initial condition set 2
 │
-└── LICENSE
+├── largperturbation_lyapunov/
+│   └── Large-deviation and Lyapunov stability analysis
+│
+├── smallperturbation/
+│   └── Small-deviation linear stability analysis
+│
+├── eom18.m
+│   └── Nonlinear equations of motion in first-order state-space form
+│
+├── Four_Bar_Parallel_System_Stability_Analysis.pdf
+│   └── Complete project report
+│
+└── README.md
 ```
 
-## Tools
+## Main Components
 
-* **MATLAB**
-* Symbolic and numerical computation
-* Numerical integration of nonlinear equations
-* Eigenvalue analysis
+| Directory / File                                          | Description                                                                             |
+| --------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `eom18.m`                                                 | Nonlinear equations of motion represented as an 8-state first-order system              |
+| `lagrange(initial1)`                                      | Numerical analysis based on the Lagrangian formulation for the first initial condition  |
+| `lagrange(initial2)`                                      | Numerical analysis based on the Lagrangian formulation for the second initial condition |
+| `canonical hamilton`                                      | Canonical Hamiltonian formulation and analysis                                          |
+| `smallperturbation`                                       | Linearization and small-deviation stability analysis                                    |
+| `largperturbation_lyapunov`                               | Large-deviation stability and Lyapunov analysis                                         |
+| `LET`                                                     | Lyapunov exponent calculation and convergence analysis                                  |
+| `Four_Bar_Parallel_System_Stability_Analysis.pdf` | Complete project report                                                         |
+
+## Computational Tools
+
+The project is implemented primarily in **MATLAB** and uses numerical computation for:
+
+* Nonlinear ordinary differential equations
+* Numerical integration
 * State-space modeling
+* Eigenvalue analysis
+* Linearization
 * Lyapunov stability analysis
-* Data visualization
+* Lyapunov exponent calculation
+* Dynamic-response visualization
+
+## How to Use
+
+### Requirements
+
+* MATLAB
+* Appropriate MATLAB toolboxes required by the individual scripts
+* LET toolbox for the Lyapunov exponent analysis
+
+### Basic Workflow
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/EmadKianasl/Four-DoF-Spring-Coupled-System-Stability.git
+```
+
+2. Open the repository in MATLAB.
+
+3. Start with `eom18.m` to inspect the nonlinear state-space representation of the system.
+
+4. Explore the formulation-specific directories:
+
+```text
+lagrange(initial1)
+lagrange(initial2)
+canonical hamilton
+```
+
+5. For local stability analysis, use:
+
+```text
+smallperturbation
+```
+
+6. For nonlinear/Lyapunov stability analysis, use:
+
+```text
+largperturbation_lyapunov
+```
+
+7. For Lyapunov exponent calculations, use:
+
+```text
+LET
+```
+
+## Project Results
+
+The project investigates:
+
+* Nonlinear dynamic response of the four-DOF system
+* Local stability around equilibrium configurations
+* Eigenvalue-based stability characteristics
+* Lyapunov-based nonlinear stability
+* Convergence of Lyapunov exponents
+* Region of attraction associated with the Lyapunov function
+
+The complete derivations, mathematical development, numerical results, and figures are provided in the project report:
+
+**`Four_Bar_Parallel_System_Stability_Analysis.pdf`**
 
 ## Course Project
 
@@ -152,4 +260,4 @@ The theoretical development and numerical analysis are based on the course proje
 
 ## License
 
-This project is intended primarily for academic and educational purposes.
+This repository is intended primarily for academic and educational purposes.
